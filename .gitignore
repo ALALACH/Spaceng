@@ -1,0 +1,13 @@
+#directories
+
+.vs/
+bin/
+bin-int/
+Spaceng.sln
+
+#files
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
