@@ -6,7 +6,7 @@ namespace Spaceng {
 
 	class Layer {
 	public:
-		Layer(const std::string Name) {}
+		Layer(const std::string Name);
 		~Layer();
 		
 		virtual void OnAttach();
