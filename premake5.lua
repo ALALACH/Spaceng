@@ -36,6 +36,11 @@ project "Spaceng"
 		"%{prj.name}/src/**.cpp"
 	}
 
+	links 
+	{ 
+	
+	}
+
 	filter "system:windows"
 	systemversion "latest"
 	

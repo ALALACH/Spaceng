@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Spaceng.h"
 #include <iostream>
 
 #ifdef SE_PLATFORM_WIN

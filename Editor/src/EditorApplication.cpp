@@ -1,5 +1,5 @@
 #include "Spaceng.h"
-#include "Spaceng/EntryPoint.h"
+#include "EntryPoint.h"
 
 
 class EditorApplication : public Spaceng::Application
