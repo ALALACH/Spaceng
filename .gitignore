@@ -3,7 +3,6 @@
 .vs/
 bin/
 bin-int/
-Spaceng.sln
 
 #files
 **.sln
