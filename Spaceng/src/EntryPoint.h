@@ -9,7 +9,7 @@ extern Spaceng::Application* Spaceng::CreateApplication();
 int main(int argc, char** argv)
 {
 	Spaceng::log::init();
-	LOG_INFO("SPACENG ENGINE {}",SE_BUILD_ID);
+	LOG_WARN("SPACENG ENGINE {}",SE_BUILD_ID);
 	Spaceng::Application* app = Spaceng::CreateApplication();
 	app->Run();
 	delete app;
