@@ -23,9 +23,13 @@ project "Spaceng"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "PCH.h"
+	pchsource "Spaceng/src/PCH.cpp"
+
 	includedirs
 	{
-		"%{prj.name}/src"
+		"%{prj.name}/src",
+		"%{prj.name}/Dependencies"
 	}
 
 	files 
@@ -83,7 +87,8 @@ project "Editor"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"Spaceng/src"
+		"Spaceng/src",
+		"Spaceng/Dependencies"
 	}
 	
 	files 

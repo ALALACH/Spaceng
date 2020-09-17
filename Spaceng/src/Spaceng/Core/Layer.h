@@ -1,6 +1,6 @@
 #pragma once 
-#include <string>
 #include "Spaceng/EventSystem/Event.h"
+#include <string>
 
 namespace Spaceng {
 
