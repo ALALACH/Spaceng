@@ -1,0 +1,3 @@
+[submodule "Spaceng/Dependencies/glfw"]
+	path = Spaceng/Dependencies/glfw
+	url = https://github.com/ALALACH/glfw

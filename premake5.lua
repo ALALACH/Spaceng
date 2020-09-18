@@ -12,7 +12,14 @@ workspace "Spaceng"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-group "Buildblocks"
+--includeDir init
+IncludeDir = {}
+IncludeDir["glfw"] = "Spaceng/Dependencies/glfw/include"
+
+group "Buildblock-Tier2"
+include "Spaceng/Dependencies/glfw"
+
+group "Buildblock-Tier1"
 project "Spaceng"
 	location "Spaceng"
 	kind "StaticLib"
@@ -29,7 +36,8 @@ project "Spaceng"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/Dependencies"
+		"%{prj.name}/Dependencies",
+		"%{IncludeDir.glfw}"
 	}
 
 	files 
@@ -42,7 +50,7 @@ project "Spaceng"
 
 	links 
 	{ 
-	
+		"glfw"
 	}
 
 	filter "system:windows"
@@ -50,7 +58,8 @@ project "Spaceng"
 	
 	defines 
 	{ 
-		"SE_PLATFORM_WIN"
+		"SE_PLATFORM_WIN",
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 
 	filter "configurations:Debug"
@@ -68,7 +77,8 @@ project "Spaceng"
 
 
 
-group "Applications"
+
+group "Client"
 project "Editor"
 	location "Editor"
 	kind "ConsoleApp"
@@ -104,7 +114,8 @@ project "Editor"
 				
 		defines 
 		{ 
-			"SE_PLATFORM_WIN"
+			"SE_PLATFORM_WIN",
+			"_CRT_SECURE_NO_WARNINGS"
 		}
 	
 	filter "configurations:Debug"
