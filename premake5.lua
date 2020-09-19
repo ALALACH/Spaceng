@@ -16,7 +16,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["glfw"] = "Spaceng/Dependencies/glfw/include"
 
-group "Buildblock-Tier2"
+
 include "Spaceng/Dependencies/glfw"
 
 group "Buildblock-Tier1"
