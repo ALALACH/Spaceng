@@ -10,6 +10,7 @@ namespace Spaceng {
 		std::string Tittle;
 		uint32_t Width, Height;
 		bool Vsync;
+		std::function<void(Event&)> EventCallback;
 	};
 	WindowData m_Data;
 
@@ -29,13 +30,16 @@ namespace Spaceng {
 		inline  uint32_t GetWidth()  const override { return m_Data.Width; }
 		inline  uint32_t GetHeight() const override { return m_Data.Height; }
 
+		virtual void SetEventCallback(const std::function<void(Event&)>& callback) override { m_Data.EventCallback = callback; }
 		virtual void SetVsync(bool Enabled) override;
 		virtual bool IsVsync() const override;
 
 		inline const std::string GetTitle() const override { return m_Data.Tittle; }
 		virtual void UpdateTittle(const std::string tittle)  override;
-		inline void* GetWindow() const override { return m_Window; }
 
+		inline void* GetGlfwWindow() const  { return m_Window; }
+	
+	
 	private:
 		void Init(const WindowSettings& Settings);
 
@@ -44,7 +48,7 @@ namespace Spaceng {
 		GLFWwindow* m_Window;
 	};
 	
-	static bool GLFWInit = false;
+	static bool s_GLFWInit = false;
 
 
 

@@ -9,11 +9,11 @@ extern Spaceng::Application* Spaceng::CreateApplication();
 int main(int argc, char** argv)
 {
 	Spaceng::log::init();
-	LOG_WARN("SPACENG ENGINE {}",SE_BUILD_ID);
+	LOG_WARN("Spaceng Engine {}",SE_BUILD_ID);
 	Spaceng::Application* app = Spaceng::CreateApplication();
 	app->Run();
+	LOG_CRITICAL("Shutdown...");
 	delete app;
-	std::cin.get();
 }
 
 #endif

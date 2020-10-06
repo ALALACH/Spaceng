@@ -1,6 +1,7 @@
 #include "PCH.h"
 #include "WindowsWindow.h"
 
+
 namespace Spaceng {
 
 	
@@ -20,22 +21,30 @@ namespace Spaceng {
 		m_Data.Width = Settings.Width;
 		m_Data.Height = Settings.Height;
 
-		if(!GLFWInit)
+		if(!s_GLFWInit)
 		{ 
 		glfwInit();
-		GLFWInit = true;
-		LOG_INFO("GLFW Initiated : {} ", GLFWInit);
+		s_GLFWInit = true;
+		SE_ASSERT(s_GLFWInit, "GLFW could not be Initiated!")
 		}
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Tittle.c_str(), nullptr, nullptr);
-		LOG_INFO("Window Created ");
+		LOG_DEBUG("{} Window Created ",m_Data.Tittle);
 
 		glfwMakeContextCurrent(m_Window);
-		glfwMaximizeWindow(m_Window);
+		//glfwMaximizeWindow(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 
-	}
 
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+			{
+				auto& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				WindowCloseEvent e;
+				data.EventCallback(e);
+				LOG_DEBUG("Window Closed EventCallback");
+			});
+
+	}
 
 	WindowsWindow::~WindowsWindow()
 	{
@@ -43,6 +52,7 @@ namespace Spaceng {
 
 	void WindowsWindow::OnUpdate()
 	{
+		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
@@ -72,15 +82,4 @@ namespace Spaceng {
 		m_Data.Tittle = tittle;
 		glfwSetWindowTitle(m_Window, m_Data.Tittle.c_str());
 	}
-
-
-
-
-
-
-
-
-
-
-
 }

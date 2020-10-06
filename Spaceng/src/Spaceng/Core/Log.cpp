@@ -12,6 +12,6 @@
 	 {
 		 spdlog::set_pattern("%^[%T] : %v%$");
 		 s_logger = spdlog::stdout_color_mt("LOG");
-		 s_logger->set_level(spdlog::level::trace);
+		 s_logger->set_level(spdlog::level::debug);
 	 }
 }

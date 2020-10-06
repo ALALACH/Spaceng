@@ -1,5 +1,5 @@
 #pragma once 
-#include "Spaceng/EventSystem/Event.h"
+#include "Event.h"
 #include <string>
 
 namespace Spaceng {
