@@ -6,6 +6,8 @@
 
 namespace Spaceng {
 
+	using EventCallbackFn = std::function<void(Event&)>;
+
 	struct WindowSettings
 	{
 		std::string Tittle;
@@ -34,7 +36,7 @@ namespace Spaceng {
 		virtual uint32_t GetWidth()  const =0 ;
 		virtual uint32_t GetHeight() const = 0 ;
 
-		virtual void SetEventCallback(const std::function<void(Event&)>& callback) = 0;
+		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVsync(bool Enabled) = 0;
 		virtual bool IsVsync() const = 0;
 

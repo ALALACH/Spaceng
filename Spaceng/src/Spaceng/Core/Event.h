@@ -4,28 +4,41 @@
 
 
 namespace Spaceng {
+	enum class EventType
+	{
+		None = 0,
+		WindowClose, WindowResize,
+		KeyPressed, KeyReleased,
+		MouseButtonPressed, MouseButtonReleased, MouseScrolled, MouseMoved
+	};
+#define EVENT_CLASS_TYPE(type)  static EventType GetStaticType() { return EventType::##type; }\
+								virtual EventType GetEventType() const override { return GetStaticType(); }
 
 	class Event
 	{
 	public:
 		bool Handeled = false;
+		virtual EventType GetEventType() const = 0;
 	};
 
 
-	class EventDispatcher : public Event
+	class EventDispatcher
 	{
-		template<typename T>
-		using EventFn = std::function<bool(T&)>;
+		template<typename _Event>
+		using EventFn = std::function<bool(_Event&)>;
 	public:
-		EventDispatcher(Event& e)
-			:m_Event(e) {}
+		EventDispatcher(Event& event)
+			:m_Event(event) {}
 
-		template<class C>
-		bool Dispatch(EventFn<C> func)
+		template<typename _Event_Class_Type>
+		bool Dispatch(EventFn<_Event_Class_Type> function)
 		{
-
-			m_Event.Handeled = func(*(C*)&m_Event);
+			if (m_Event.GetEventType()== _Event_Class_Type::GetStaticType())
+			{ 
+			m_Event.Handeled = function(*(_Event_Class_Type*)&m_Event);
 			return true;
+			}
+			return false;
 		}
 		
 	private:
@@ -40,6 +53,7 @@ namespace Spaceng {
 	{
 	public:
 		WindowCloseEvent() {}
+		EVENT_CLASS_TYPE(WindowClose)
 	};
 
 
@@ -51,6 +65,7 @@ namespace Spaceng {
 
 		inline uint32_t GetHeight() const { return m_Height; }
 		inline uint32_t GetWidth() const { return m_Width; }
+		EVENT_CLASS_TYPE(WindowResize)
 
 	private:
 		uint32_t m_Width, m_Height;
@@ -66,7 +81,7 @@ namespace Spaceng {
 			: m_KeyCode(keycode), m_RepeatCount(repeatCount) {}
 
 		inline Code GetKeyCode() const { return m_KeyCode; }
-
+		EVENT_CLASS_TYPE(KeyPressed)
 	private:
 
 		Code m_KeyCode;
@@ -82,7 +97,7 @@ namespace Spaceng {
 			:m_KeyCode(keycode){}
 
 		inline Code GetKeyCode() const { return m_KeyCode; }
-
+		EVENT_CLASS_TYPE(KeyReleased)
 	private:
 
 		Code m_KeyCode;
@@ -100,7 +115,7 @@ namespace Spaceng {
 			:m_MouseButton(mousebutton){}
 
 		inline Code GetMouseButton() const { return m_MouseButton; }
-
+		EVENT_CLASS_TYPE(MouseButtonPressed)
 	private:
 		Code m_MouseButton;
 	};
@@ -111,6 +126,7 @@ namespace Spaceng {
 	public:
 		MouseButtonReleasedEvent(Code mousebutton)
 			:m_MouseButton(mousebutton) {}
+		EVENT_CLASS_TYPE(MouseButtonReleased)
 	private:
 		Code m_MouseButton;
 	};
@@ -124,7 +140,7 @@ namespace Spaceng {
 
 		inline float GetXOffset() const { return m_XOffset; }
 		inline float GetYOffset() const { return m_YOffset; }
-
+		EVENT_CLASS_TYPE(MouseScrolled)
 	private:
 		float m_XOffset, m_YOffset;
 	};
@@ -138,7 +154,7 @@ namespace Spaceng {
 
 		inline float GetXPosition() const { return m_XPos; }
 		inline float GetYPosition() const { return m_YPos; }
-
+		EVENT_CLASS_TYPE(MouseMoved)
 	private:
 		float m_XPos, m_YPos;
 

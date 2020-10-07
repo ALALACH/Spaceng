@@ -29,7 +29,6 @@ namespace Spaceng {
 		}
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Tittle.c_str(), nullptr, nullptr);
-		LOG_DEBUG("{} Window Created ",m_Data.Tittle);
 
 		glfwMakeContextCurrent(m_Window);
 		//glfwMaximizeWindow(m_Window);
@@ -42,7 +41,7 @@ namespace Spaceng {
 				auto& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				WindowCloseEvent e;
 				data.EventCallback(e);
-				LOG_DEBUG("Window Closed EventCallback");
+				SE_LOG_DEBUG("Window Closed EventCallback")
 			});
 
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
@@ -52,7 +51,9 @@ namespace Spaceng {
 				data.EventCallback(e);
 				data.Height = height;
 				data.Width = width;
+				SE_LOG_DEBUG("Window REsize EventCallback")
 			});
+		
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 			{
 				auto& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -62,14 +63,15 @@ namespace Spaceng {
 					{
 						MouseButtonPressedEvent e((Code)button);
 						data.EventCallback(e);
-							break;
+						SE_LOG_DEBUG("MousePressed EventCallback")
+						break;
 					}
 					case GLFW_RELEASE:
 					{
 						MouseButtonReleasedEvent e((Code)button);
-							data.EventCallback(e);
-							break;
-
+						data.EventCallback(e);
+						SE_LOG_DEBUG("Mouse Released EventCallback")
+						break;
 					}
 				}
 			});
@@ -82,18 +84,21 @@ namespace Spaceng {
 					{
 						KeyPressedEvent e((Code)key, 0);
 						data.EventCallback(e);
+						SE_LOG_DEBUG("key Pressed EventCallback")
 						break;
 					}
 					case GLFW_REPEAT:
 					{
 						KeyPressedEvent e((Code)key, 1);
 						data.EventCallback(e);
+						SE_LOG_DEBUG("key OnRepeat EventCallback")
 						break;
 					}
 					case GLFW_RELEASE:
 					{
 						keyReleasedEvent e((Code)key);
 						data.EventCallback(e);
+						SE_LOG_DEBUG("key Released EventCallback")
 						break;
 					}
 					}
@@ -140,6 +145,7 @@ namespace Spaceng {
 		else
 			glfwSwapInterval(0);
 		m_Data.Vsync = Enabled;	
+		SE_ASSERT(m_Data.Vsync,"vSync");
 	}
 
 	bool WindowsWindow::IsVsync() const

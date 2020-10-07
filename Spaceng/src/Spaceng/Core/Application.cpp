@@ -12,7 +12,13 @@ namespace Spaceng {
 		
 		m_Window = std::unique_ptr<Window>
 			(Window::Create(WindowSettings(Settings.Name, Settings.WindowWidth, Settings.WindowHeight)));
-		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
+
+		SE_LOG_DEBUG("Window {} Created",m_Window->GetTitle())
+
+		m_Window->SetEventCallback(SE_BIND_EVENT(Application::OnEvent));
+
+		SE_LOG_DEBUG("Window {} EventCallback Set", m_Window->GetTitle())
+
 		m_Window->SetVsync(true);
 
 	}
@@ -35,8 +41,9 @@ namespace Spaceng {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT(Application::OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(SE_BIND_EVENT(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(SE_BIND_EVENT(Application::OnWindowResize));
+		
 	}
 
 	void Application::OnUpdate()
@@ -51,7 +58,7 @@ namespace Spaceng {
 	}
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
-		uint32_t Height = e.GetHeight(), Width = e.GetWidth();
+		//uint32_t Height = e.GetHeight(), Width = e.GetWidth();
 		//todo : Resize viewport & ImGui Pannels
 		return true;
 	}
