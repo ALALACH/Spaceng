@@ -1,3 +1,3 @@
-[submodule "Spaceng/Dependencies/glfw"]
-	path = Spaceng/Dependencies/glfw
-	url = https://github.com/ALALACH/glfw
+[submodule "Spaceng/Dependencies/Imgui"]
+	path = Spaceng/Dependencies/Imgui
+	url = https://github.com/ALALACH/imgui
