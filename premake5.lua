@@ -1,6 +1,7 @@
 workspace "Spaceng"
 	architecture "x64"
 	targetdir "build"
+	startproject "Editor"
 
 	configurations
 	{
@@ -8,16 +9,21 @@ workspace "Spaceng"
 		"Release",
 		"Dist"
 	}
-	startproject "Editor"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 --includeDir init
 IncludeDir = {}
-IncludeDir["glfw"] = "Spaceng/Dependencies/glfw/include"
+IncludeDir["glfw"] = "Spaceng/Dependency/glfw/include"
+IncludeDir["imgui"] = "Spaceng/Dependency/imgui"
+IncludeDir["spdlog"] = "Spaceng/Dependency/spdlog"
 
-group"Dependencies"
-include "Spaceng/Dependencies/glfw"
+
+
+
+include "Spaceng/Dependency/glfw"
+include "Spaceng/Dependency/imgui"
+--include "Spaceng/Dependency/spdlog"
 
 group "Buildblock-Tier1"
 project "Spaceng"
@@ -36,8 +42,10 @@ project "Spaceng"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/Dependencies",
-		"%{IncludeDir.glfw}"
+		"%{prj.name}/Dependency",
+		"%{IncludeDir.glfw}",
+		"%{IncludeDir.imgui}",
+		"%{IncludeDir.spdlog}"
 	}
 
 	files 
@@ -50,7 +58,8 @@ project "Spaceng"
 
 	links 
 	{ 
-		"glfw"
+		"glfw",
+		"imgui"
 	}
 
 	filter "system:windows"
@@ -98,7 +107,7 @@ project "Editor"
 	{
 		"%{prj.name}/src",
 		"Spaceng/src",
-		"Spaceng/Dependencies"
+		"Spaceng/Dependency"
 	}
 	
 	files 
